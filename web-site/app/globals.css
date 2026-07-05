@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6fafb;
+  --foreground: #13233f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: #b8edf3;
+  color: #072a43;
+}
+
+button,
+a,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.form-field {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 8px;
+  border: 1.5px solid #b9cbd3;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(135deg, rgba(9, 148, 168, 0.35), rgba(10, 57, 86, 0.18)) border-box;
+  padding: 0 12px;
+  color: #0a2540;
+  font-size: 15px;
+  font-weight: 700;
+  outline: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(15, 23, 42, 0.06);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.form-field:hover {
+  border-color: #8db7c2;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.form-field:focus {
+  border-color: #0994a8;
+  background-color: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(9, 148, 168, 0.14),
+    0 8px 22px rgba(9, 148, 168, 0.13);
+  transform: translateY(-1px);
+}
+
+.compact-field {
+  min-height: 42px;
+  font-size: 14px;
+}
+
+.form-step-panel {
+  animation: form-step-in 220ms ease both;
+}
+
+@keyframes form-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+select.form-field {
+  cursor: pointer;
+}
+
+textarea.form-field {
+  line-height: 1.5;
+}
+
+.reviews-carousel {
+  overflow: hidden;
+}
+
+.reviews-carousel-track {
+  animation: reviews-scroll 44s linear infinite;
+}
+
+.reviews-carousel:hover .reviews-carousel-track {
+  animation-play-state: paused;
+}
+
+@keyframes reviews-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 8px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reviews-carousel {
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .reviews-carousel-track {
+    animation: none;
+  }
+}
