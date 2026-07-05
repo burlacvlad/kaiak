@@ -140,7 +140,7 @@ const pricing = [
     title: "Corturi",
     eyebrow: "Camping",
     icon: Tent,
-    badge: "Pentru weekend",
+    badge: "Disponibil zilnic",
     price: "250 lei",
     period: "cort dublu / 12 ore",
     description: "Echipament de camping curat și verificat pentru nopți lângă apă.",
