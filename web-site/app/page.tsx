@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 import {
@@ -30,6 +31,8 @@ import {
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { PhotoLightboxGallery } from "@/components/photo-lightbox-gallery";
+import { galleryImages } from "@/lib/gallery-images";
 
 const navLinks = [
   { label: "Acasă", href: "#acasa" },
@@ -150,39 +153,6 @@ const pricing = [
       "Sac de dormit - 100 lei / 12 ore",
       "Reduceri pentru grupuri și copii",
     ],
-  },
-];
-
-const galleryImages = [
-  {
-    src: "/images/kayak-double.jpg",
-    alt: "Cuplu în caiac la apus",
-    className: "md:col-span-2",
-  },
-  {
-    src: "/images/tent.jpg",
-    alt: "Cort amplasat pe malul apei",
-    className: "",
-  },
-  {
-    src: "/images/kayaks-two.jpg",
-    alt: "Două caiace pe apă liniștită",
-    className: "",
-  },
-  {
-    src: "/images/canoe-group.jpg",
-    alt: "Grup în canoe pe apă",
-    className: "md:col-span-2",
-  },
-  {
-    src: "/images/sunset-kayak.jpg",
-    alt: "Caiac la apus pe apă",
-    className: "",
-  },
-  {
-    src: "/images/camping-section.jpg",
-    alt: "Camping lângă apă",
-    className: "",
   },
 ];
 
@@ -1509,25 +1479,22 @@ function WhyChooseSection() {
 }
 
 function GallerySection() {
+  const featuredGalleryImages = galleryImages.slice(0, 8);
+
   return (
     <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <SectionTitle eyebrow="Galerie" title="Momente de pe Nistru" />
-        <div className="mt-9 grid auto-rows-[220px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {galleryImages.map((image) => (
-            <div
-              key={image.src}
-              className={`group relative overflow-hidden rounded-lg bg-slate-100 shadow-sm ${image.className}`}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover transition duration-500 group-hover:scale-105"
-              />
-            </div>
-          ))}
+        <div className="mt-9">
+          <PhotoLightboxGallery images={featuredGalleryImages} variant="home" />
+        </div>
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/galerie"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#0994a8] bg-white px-5 py-3 text-sm font-black text-[#087d8f] transition hover:-translate-y-0.5 hover:bg-cyan-50"
+          >
+            Vezi mai multe poze
+          </Link>
         </div>
       </div>
     </section>
