@@ -45,8 +45,8 @@ const navLinks = [
 ];
 
 const heroChecks = [
-  "Echipament de calitate",
-  "Prețuri corecte și transparente",
+  "Doar arendă, fără excursii organizate",
+  "Tu alegi singur traseul și ritmul",
   "Rezervare rapidă și ușoară",
   "Punct de start: satul Pîrîta",
 ];
@@ -54,7 +54,7 @@ const heroChecks = [
 const benefits = [
   {
     title: "Kayak + Camping",
-    text: "Apă și natură într-un singur loc",
+    text: "Arendă de echipament pentru apă și camping",
     icon: Waves,
   },
   {
@@ -64,12 +64,12 @@ const benefits = [
   },
   {
     title: "Trasee variate",
-    text: "Pentru toate nivelurile",
+    text: "Idei de traseu, dar tu decizi cum mergi",
     icon: Route,
   },
   {
     title: "Suport local",
-    text: "Asistență și recomandări",
+    text: "Asistență pentru arendă și predare echipament",
     icon: LifeBuoy,
   },
 ];
@@ -77,21 +77,21 @@ const benefits = [
 const experiences = [
   {
     title: "Caiac Dublu Gonflabil",
-    description: "Caiac gonflabil stabil, perfect pentru cupluri sau prieteni.",
+    description: "Caiac gonflabil stabil, perfect pentru două persoane.",
     price: "de la 450 MDL / zi",
     image: "/images/kayak-double.jpg",
     alt: "Două persoane într-un caiac pe lac",
   },
   {
     title: "Cort 2 Persoane",
-    description: "Cort ușor, rezistent, pentru 2 persoane.",
+    description: "Cort ușor, rezistent, pentru 2 persoane, pentru arendă separată.",
     price: "de la 250 MDL / zi",
     image: "/images/tent.jpg",
     alt: "Cort galben lângă apă",
   },
   {
     title: "Sac de dormit",
-    description: "Confort termic pentru nopți liniștite.",
+    description: "Confort termic pentru nopți liniștite, ca echipament separat.",
     price: "de la 100 MDL / zi",
     image: "/images/sleeping-bag.jpg",
     alt: "Sac de dormit pregătit pentru camping",
@@ -108,17 +108,17 @@ const equipmentOptions = [
 const routeCards = [
   {
     title: "satul Pohrebia - satul Pîrîta",
-    text: "Traseu spectaculos pentru o zi activă pe apă.",
+    text: "Traseu recomandat, folosit doar ca sugestie de orientare.",
     meta: "3-4 ore",
   },
   {
     title: "Tur relaxat pe mal",
-    text: "Ideal pentru începători, familii și copii.",
+    text: "Variantă simplă pentru cei care vor să meargă în ritmul lor.",
     meta: "1-2 ore",
   },
   {
     title: "Apus pe Nistru",
-    text: "Ieșire scurtă, perfectă pentru fotografii și liniște.",
+    text: "Ieșire scurtă, perfectă pentru fotografii și liniște, fără ghidaj.",
     meta: "Seara",
   },
 ];
@@ -217,7 +217,7 @@ const faqs = [
   {
     question: "Trebuie să am experiență pentru a închiria?",
     answer:
-      "Nu. Avem trasee potrivite pentru începători și îți explicăm regulile de bază înainte de plecare.",
+      "Nu. Îți explicăm regulile de bază înainte de predare, iar tu decizi cum folosești echipamentul.",
   },
   {
     question: "Ce este inclus în prețul închirierii?",
@@ -227,12 +227,12 @@ const faqs = [
   {
     question: "Pot anula o rezervare?",
     answer:
-      "Da. Anunță-ne cât mai devreme. Dacă vremea nu permite ieșirea pe apă, mutăm rezervarea pentru altă zi disponibilă.",
+      "Da. Anunță-ne cât mai devreme. Dacă vremea nu permite folosirea echipamentului, mutăm rezervarea pentru altă zi disponibilă.",
   },
   {
-    question: "De unde încep traseele?",
+    question: "Oferiți excursii organizate sau ghidaj?",
     answer:
-      "Punctul de start este în satul Pîrîta, cu acces rapid la malul Nistrului și parcare în apropiere.",
+      "Nu. Oferim doar arendă de caiace și echipament. Clientul decide singur traseul, ritmul și modul de folosire.",
   },
   {
     question: "Este sigur pentru copii?",
@@ -381,8 +381,8 @@ function Hero() {
             satul Pîrîta
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-cyan-50 sm:text-xl">
-            Închiriază caiace gonflabile, canoe, corturi și saci de dormit și
-            trăiește aventura pe apă și la camping.
+            Închiriază caiace gonflabile, corturi și saci de dormit. Nu
+            organizăm excursii sau tururi, doar arendă de echipament.
           </p>
 
           <div className="mt-8 grid max-w-xl gap-3 sm:grid-cols-2">
@@ -1150,14 +1150,14 @@ function FeaturedExperience() {
         </div>
         <div className="flex flex-col justify-center p-6 lg:p-8">
           <p className="mb-2 text-sm font-black uppercase tracking-[0.14em] text-[#0994a8]">
-            Escapadă completă
+            Arendă completă
           </p>
           <h3 className="text-2xl font-black text-[#0a3956]">
             Pachet Weekend - Kayak + Camping
           </h3>
           <p className="mt-3 leading-7 text-slate-600">
             Caiac gonflabil pentru 2 zile + cort + saci de dormit. Tot ce ai
-            nevoie pentru o escapadă completă.
+            nevoie pentru arendă, fără excursie organizată.
           </p>
           <p className="mt-5 text-2xl font-black text-[#13233f]">
             de la 1 200 MDL / 2 zile
@@ -1230,9 +1230,8 @@ function PricingSection() {
               Prețuri închiriere
             </h2>
             <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-              Alege echipamentul, ora de start și durata arendei. Prețurile sunt
-              simple, transparente și potrivite pentru o zi pe Nistru sau un
-              weekend la camping.
+              Alege echipamentul, ora de start și durata arendei. Noi oferim
+              doar arendă de echipament, nu excursii organizate sau ghidaj.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
@@ -1517,7 +1516,7 @@ function ReviewsSection() {
             </h2>
             <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
               Feedback scurt și clar de la oameni care au închiriat caiace
-              gonflabile, corturi sau pachete pentru weekend.
+              gonflabile și echipament de camping.
             </p>
           </div>
 
@@ -1630,7 +1629,7 @@ function LocationSection() {
               "30 min de la Chișinău",
               "Parcare gratuită",
               "Acces facil la malul Nistrului",
-              "Punct de start pentru trasee superbe",
+              "Punct de start pentru arendă și predare echipament",
             ].map((item) => (
               <li key={item} className="flex items-start gap-3 font-semibold text-slate-700">
                 <MapPin className="mt-0.5 h-5 w-5 flex-none text-[#0994a8]" aria-hidden="true" />
@@ -1763,10 +1762,10 @@ function FinalCTA() {
       <div className="relative mx-auto flex max-w-7xl flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="max-w-3xl text-4xl font-black leading-tight sm:text-5xl">
-            Pregătit pentru o zi sau un weekend pe apă?
+            Pregătit pentru arendă, nu pentru excursii organizate?
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-cyan-50">
-            Rezervă acum și bucură-te de libertate, natură și liniște.
+            Rezervă acum echipamentul și folosește-l cum vrei, în ritmul tău.
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
@@ -1801,7 +1800,7 @@ function Footer() {
             </span>
           </a>
           <p className="mt-5 max-w-sm leading-7 text-cyan-50">
-            Aventură pe Nistru, echipament premium, amintiri de neuitat.
+            Arendă de caiace și echipament de camping în satul Pîrîta.
           </p>
         </div>
 
