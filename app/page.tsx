@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import {
   BadgeCheck,
   CalendarDays,
@@ -103,6 +103,13 @@ const equipmentOptions = [
   { value: "sac-de-dormit", label: "Sac de dormit" },
   { value: "pachet-recomandat", label: "Pachet Recomandat" },
 ];
+
+const equipmentPriceByValue: Record<string, number> = {
+  "kayak-dublu": 450,
+  cort: 250,
+  "sac-de-dormit": 100,
+  "pachet-recomandat": 1200,
+};
 
 const routeCards = [
   {
@@ -473,6 +480,20 @@ function HeroBookingForm() {
     setFormStep(2);
   }
 
+  const estimatedTotal = selectedEquipment.reduce((sum, value) => {
+    const quantity = equipmentQuantities[value] ?? 1;
+    const itemPrice = equipmentPriceByValue[value] ?? 0;
+
+    return sum + itemPrice * quantity;
+  }, 0);
+
+  const durationMultiplier = rentalDetails.duration === "multi" ? 2 : 1;
+  const estimatedTotalWithDuration = estimatedTotal * durationMultiplier;
+  const estimatedTotalLabel =
+    rentalDetails.duration === "multi"
+      ? `Total orientativ: de la ${estimatedTotalWithDuration.toLocaleString("ro-MD")} lei`
+      : `Total orientativ: ${estimatedTotalWithDuration.toLocaleString("ro-MD")} lei`;
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -666,6 +687,14 @@ function HeroBookingForm() {
             >
               Continuă la pasul 2
             </button>
+            <p className="mt-3 rounded-lg border border-cyan-100 bg-cyan-50 px-4 py-3 text-sm font-semibold leading-6 text-[#0a6573]">
+              {estimatedTotalLabel}
+              {rentalDetails.duration === "multi" ? (
+                <span className="block text-xs font-semibold text-[#0f7f8e]">
+                  Pentru mai multe zile, suma finală se confirmă la arendă.
+                </span>
+              ) : null}
+            </p>
           </div>
         ) : (
           <div key="step-2" className="form-step-panel">
@@ -817,6 +846,7 @@ function EquipmentMultiSelect({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const selectedItems = equipmentOptions.filter((option) =>
     selected.includes(option.value)
   );
@@ -832,8 +862,40 @@ function EquipmentMultiSelect({
     onChange(next);
   }
 
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    function handlePointerDown(event: PointerEvent) {
+      const target = event.target;
+
+      if (!(target instanceof Node)) {
+        return;
+      }
+
+      if (!dropdownRef.current?.contains(target)) {
+        setIsOpen(false);
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="relative">
+    <div ref={dropdownRef} className="relative">
       {selected.map((value) => (
         <input key={value} type="hidden" name="equipment" value={value} />
       ))}
