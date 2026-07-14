@@ -37,7 +37,6 @@ import { galleryImages } from "@/lib/gallery-images";
 const navLinks = [
   { label: "Acasă", href: "#acasa" },
   { label: "Echipament", href: "#experiente" },
-  { label: "Camping", href: "#camping" },
   { label: "Prețuri", href: "#preturi" },
   { label: "Trasee", href: "#trasee" },
   { label: "Despre noi", href: "#despre" },
@@ -1762,7 +1761,6 @@ function Footer() {
           links={[
             { label: "Acasă", href: "#acasa" },
             { label: "Echipament", href: "#experiente" },
-            { label: "Camping", href: "#camping" },
           ]}
         />
         <FooterColumn
