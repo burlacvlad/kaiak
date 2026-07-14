@@ -36,7 +36,7 @@ import { galleryImages } from "@/lib/gallery-images";
 
 const navLinks = [
   { label: "Acasă", href: "#acasa" },
-  { label: "Caiace", href: "#experiente" },
+  { label: "Echipament", href: "#experiente" },
   { label: "Camping", href: "#camping" },
   { label: "Prețuri", href: "#preturi" },
   { label: "Trasee", href: "#trasee" },
@@ -260,7 +260,6 @@ export default function Home() {
       <BenefitsStrip />
       <RoutesSection />
       <ExperiencesSection />
-      <CampingSection />
       <PricingSection />
       <WhyChooseSection />
       <GallerySection />
@@ -1125,7 +1124,7 @@ function ExperienceCard({
           <span className="text-xl font-black text-[#13233f]">{price}</span>
         </p>
         <a href="#rezervare" className={`${primaryButton} mt-5 w-full`}>
-          Detalii
+          Rezervă echipamentul
         </a>
       </div>
     </article>
@@ -1163,57 +1162,11 @@ function FeaturedExperience() {
             de la 1 200 MDL / 2 zile
           </p>
           <a href="#rezervare" className={`${primaryButton} mt-6 w-full sm:w-auto`}>
-            Detalii
+            Rezervă pachetul
           </a>
         </div>
       </div>
     </article>
-  );
-}
-
-function CampingSection() {
-  const bullets = [
-    "Corturi pentru 2-4 persoane",
-    "Saci de dormit confortabili",
-    "Ideal pentru weekend și aventuri scurte",
-    "Potrivit pentru cupluri, prieteni și familii",
-    "Locuri liniștite, natură și apusuri superbe",
-  ];
-
-  return (
-    <section id="camping" className="overflow-hidden bg-[#edf7f8] px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.82fr_1.18fr]">
-        <div>
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-[#0994a8]">
-            Camping pe Nistru
-          </p>
-          <h2 className="mt-3 text-4xl font-black leading-tight text-[#0a3956] sm:text-5xl">
-            Camping pe malul Nistrului
-          </h2>
-          <ul className="mt-7 grid gap-3">
-            {bullets.map((bullet) => (
-              <li key={bullet} className="flex items-start gap-3 font-semibold text-slate-700">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-[#0994a8]" aria-hidden="true" />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-          <a href="#preturi" className={`${primaryButton} mt-8`}>
-            Vezi echipamentul de camping
-          </a>
-        </div>
-        <div className="relative aspect-[16/10] overflow-hidden rounded-lg shadow-2xl shadow-slate-900/20">
-          <Image
-            src="/images/camping-section.jpg"
-            alt="Camping cu cort lângă apă"
-            fill
-            sizes="(min-width: 1024px) 55vw, 100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(237,247,248,0.14),rgba(5,24,38,0.05))]" />
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -1808,7 +1761,7 @@ function Footer() {
           title="Navigare"
           links={[
             { label: "Acasă", href: "#acasa" },
-            { label: "Caiace", href: "#experiente" },
+            { label: "Echipament", href: "#experiente" },
             { label: "Camping", href: "#camping" },
           ]}
         />
