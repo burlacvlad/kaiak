@@ -19,10 +19,6 @@ type NormalizedEquipmentItem = {
   quantity: number;
 };
 
-type SavedRentalRequest = {
-  id?: string;
-};
-
 type RentalRequestBody = {
   rentalDate?: unknown;
   startTime?: unknown;
@@ -147,15 +143,6 @@ function normalizeEquipment(value: unknown) {
     .filter((item): item is NormalizedEquipmentItem => Boolean(item));
 }
 
-function getSavedRequestId(data: unknown) {
-  if (!Array.isArray(data)) {
-    return null;
-  }
-
-  const [firstRow] = data as SavedRentalRequest[];
-  return firstRow?.id ?? null;
-}
-
 async function sendRentalRequestEmail({
   requestId,
   rentalDate,
@@ -179,7 +166,7 @@ async function sendRentalRequestEmail({
 }) {
   const apiKey = process.env.MAILGUN_API_KEY;
   const domain = process.env.MAILGUN_DOMAIN;
-  const toEmail = process.env.MAILGUN_TO_EMAIL ?? "condratiuc.sergiu@gmail.com";
+  const toEmail = process.env.MAILGUN_TO_EMAIL ?? "burlac.vlad@gmail.com";
   const fromEmail =
     process.env.MAILGUN_FROM_EMAIL ??
     (domain ? `KAYAK Nistru <postmaster@${domain}>` : null);
@@ -472,7 +459,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const restUrl = process.env.SUPABASE_REST_URL;
+  const restUrl =
+    process.env.SUPABASE_REST_URL ??
+    (process.env.SUPABASE_URL
+      ? `${process.env.SUPABASE_URL.replace(/\/+$/, "")}/rest/v1`
+      : null);
   const secretKey = process.env.SUPABASE_SECRET_KEY;
 
   if (!restUrl || !secretKey) {
@@ -495,31 +486,8 @@ export async function POST(request: Request) {
     source: "website",
   };
 
-  const supabaseResponse = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-      apikey: secretKey,
-      Authorization: `Bearer ${secretKey}`,
-    },
-    body: JSON.stringify(payload),
-    cache: "no-store",
-  });
-
-  if (!supabaseResponse.ok) {
-    const details = await supabaseResponse.text();
-    console.error("Supabase rental_requests insert failed", details);
-
-    return NextResponse.json(
-      { error: "Nu am putut salva cererea. Încearcă din nou sau sună direct." },
-      { status: 502 }
-    );
-  }
-
-  const data = (await supabaseResponse.json()) as unknown;
   const emailSent = await sendRentalRequestEmail({
-    requestId: getSavedRequestId(data),
+    requestId: null,
     rentalDate,
     startTime,
     duration,
@@ -529,6 +497,75 @@ export async function POST(request: Request) {
     customerEmail: payload.customer_email,
     customerNote: payload.customer_note,
   });
+
+  let data: unknown = null;
+  let supabaseSaved = false;
+
+  try {
+    const supabaseResponse = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+        apikey: secretKey,
+        Authorization: `Bearer ${secretKey}`,
+      },
+      body: JSON.stringify(payload),
+      cache: "no-store",
+    });
+
+    if (supabaseResponse.ok) {
+      data = (await supabaseResponse.json()) as unknown;
+      supabaseSaved = true;
+    } else {
+      const details = await supabaseResponse.text();
+      console.error("Supabase rental_requests insert failed", details);
+    }
+  } catch (error) {
+    console.error("Supabase rental_requests fetch failed", error);
+  }
+
+  if (emailSent && supabaseSaved && data) {
+    return NextResponse.json({
+      ok: true,
+      emailSent,
+      data,
+    });
+  }
+
+  if (emailSent && !supabaseSaved) {
+    return NextResponse.json(
+      {
+        ok: true,
+        emailSent: true,
+        data: null,
+        warning:
+          "Emailul a fost trimis, dar cererea nu s-a salvat în Supabase.",
+      },
+      { status: 200 }
+    );
+  }
+
+  if (!emailSent && supabaseSaved) {
+    return NextResponse.json(
+      {
+        ok: true,
+        emailSent: false,
+        data,
+        warning:
+          "Cererea s-a salvat în Supabase, dar emailul nu a putut fi trimis.",
+      },
+      { status: 200 }
+    );
+  }
+
+  return NextResponse.json(
+    {
+      error:
+        "Nu am putut trimite nici emailul, nici salva cererea. Încearcă din nou sau sună direct.",
+    },
+    { status: 502 }
+  );
 
   return NextResponse.json({
     ok: true,
