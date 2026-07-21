@@ -45,6 +45,14 @@ function optionalText(value: unknown) {
   return text.length > 0 ? text : null;
 }
 
+function normalizeMailgunFromEmail(value: string | null) {
+  if (!value) {
+    return null;
+  }
+
+  return value.replace(/^"(.*)"$/, "$1").trim();
+}
+
 function escapeHtml(value: string) {
   return value
     .replaceAll("&", "&amp;")
@@ -167,9 +175,10 @@ async function sendRentalRequestEmail({
   const apiKey = process.env.MAILGUN_API_KEY;
   const domain = process.env.MAILGUN_DOMAIN;
   const toEmail = process.env.MAILGUN_TO_EMAIL ?? "burlac.vlad@gmail.com";
-  const fromEmail =
+  const fromEmail = normalizeMailgunFromEmail(
     process.env.MAILGUN_FROM_EMAIL ??
-    (domain ? `KAYAK Nistru <postmaster@${domain}>` : null);
+      (domain ? `KAYAK Nistru <postmaster@${domain}>` : null)
+  );
 
   if (!apiKey || !domain || !fromEmail) {
     console.warn("Mailgun env is missing, rental request email skipped");
