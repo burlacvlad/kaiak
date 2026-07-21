@@ -1424,12 +1424,12 @@ function InfoPriceCard() {
   ];
 
   return (
-    <aside className="mt-5 grid gap-4 rounded-lg border border-white bg-white p-4 shadow-lg shadow-slate-900/6 ring-1 ring-slate-900/5 lg:grid-cols-[0.85fr_1.45fr_auto] lg:items-center lg:p-5">
-      <div className="flex items-center gap-3">
+    <aside className="mt-5 grid gap-6 rounded-lg border border-white bg-white p-5 shadow-lg shadow-slate-900/6 ring-1 ring-slate-900/5 lg:grid-cols-[0.95fr_1.3fr_auto] lg:items-center lg:p-6">
+      <div className="flex items-start gap-3">
         <span className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-cyan-50 text-[#0994a8]">
           <MapPin className="h-6 w-6" aria-hidden="true" />
         </span>
-        <div>
+        <div className="pt-0.5">
           <h3 className="text-lg font-black text-[#0a3956]">Informații utile</h3>
           <p className="mt-1 text-sm font-semibold text-slate-500">
             Detalii rapide înainte de rezervare
@@ -1437,11 +1437,11 @@ function InfoPriceCard() {
         </div>
       </div>
 
-      <ul className="grid gap-3 sm:grid-cols-3">
+      <ul className="grid gap-3 sm:grid-cols-2">
         {info.map((item) => (
           <li
             key={item}
-            className="flex items-start gap-2 rounded-lg bg-[#f7fbfc] px-3 py-3 text-sm font-bold leading-6 text-slate-700"
+            className="flex items-start gap-2 rounded-lg bg-[#f7fbfc] px-4 py-4 text-sm font-bold leading-6 text-slate-700"
           >
             <BadgeCheck className="mt-0.5 h-5 w-5 flex-none text-[#0994a8]" aria-hidden="true" />
             <span>{item}</span>
@@ -1449,7 +1449,7 @@ function InfoPriceCard() {
         ))}
       </ul>
 
-      <a href="tel:078951423" className={`${primaryButton} w-full whitespace-nowrap lg:w-auto`}>
+      <a href="tel:078951423" className={`${primaryButton} w-full whitespace-nowrap lg:self-center lg:w-auto`}>
         Sună acum
       </a>
     </aside>
@@ -1785,7 +1785,7 @@ function FinalCTA() {
       <div className="relative mx-auto flex max-w-7xl flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="max-w-3xl text-4xl font-black leading-tight sm:text-5xl">
-            Esti pregatit pentru aventura ta
+            Ești pregătit să-ți alegi aventura?
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-cyan-50">
             Rezervă acum echipamentul și folosește-l cum vrei, în ritmul tău.
