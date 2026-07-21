@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { LegalPage } from "../legal-page";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Politica de confidențialitate | KAYAK Nistru",
+export const metadata = createPageMetadata({
+  title: "Politica de confidențialitate",
   description:
     "Politica de confidențialitate pentru website-ul KAYAK Nistru și formularul de cereri de arendă.",
-};
+  path: "/politica-de-confidentialitate",
+});
 
 const sections = [
   {

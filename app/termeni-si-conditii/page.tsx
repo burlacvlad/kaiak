@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { LegalPage } from "../legal-page";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Termeni și condiții | KAYAK Nistru",
+export const metadata = createPageMetadata({
+  title: "Termeni și condiții",
   description:
     "Termeni și condiții pentru arenda de caiace gonflabile și echipament de camping KAYAK Nistru.",
-};
+  path: "/termeni-si-conditii",
+});
 
 const sections = [
   {

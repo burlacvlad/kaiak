@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { PhotoLightboxGallery } from "@/components/photo-lightbox-gallery";
 import { galleryImages } from "@/lib/gallery-images";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Galerie foto | KAYAK Nistru",
+export const metadata = createPageMetadata({
+  title: "Galerie foto",
   description:
-    "Galerie foto cu caiace gonflabile, camping și peisaje de pe Nistru.",
-};
+    "Vezi fotografii reale cu caiacele gonflabile KAYAK Nistru, echipamentul de camping și momente de pe Nistru, în satul Pîrîta.",
+  path: "/galerie",
+});
 
 export default function GalleryPage() {
   return (
