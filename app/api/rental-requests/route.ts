@@ -163,7 +163,7 @@ async function sendRentalRequestEmail({
   customerPhone: string | null;
   customerEmail: string | null;
   customerNote: string | null;
-}): Promise<{ sent: boolean; toEmail: string | null }> {
+}): Promise<{ sent: boolean; toEmail: string | null; reason: string | null }> {
   const apiKey = process.env.MAILGUN_API_KEY;
   const domain = process.env.MAILGUN_DOMAIN;
   const toEmail = process.env.MAILGUN_TO_EMAIL ?? "burlac.vlad@gmail.com";
@@ -173,7 +173,7 @@ async function sendRentalRequestEmail({
 
   if (!apiKey || !domain || !fromEmail) {
     console.warn("Mailgun env is missing, rental request email skipped");
-    return { sent: false, toEmail };
+    return { sent: false, toEmail, reason: "Mailgun env is missing" };
   }
 
   const equipmentLines = equipment
@@ -404,13 +404,22 @@ async function sendRentalRequestEmail({
     if (!response.ok) {
       const details = await response.text();
       console.error("Mailgun rental request email failed", details);
-      return { sent: false, toEmail };
+      return {
+        sent: false,
+        toEmail,
+        reason: `Mailgun rejected the request: ${details}`,
+      };
     }
 
-    return { sent: true, toEmail };
+    return { sent: true, toEmail, reason: null };
   } catch (error) {
     console.error("Mailgun rental request email failed", error);
-    return { sent: false, toEmail };
+    return {
+      sent: false,
+      toEmail,
+      reason:
+        error instanceof Error ? `Mailgun fetch failed: ${error.message}` : "Mailgun fetch failed",
+    };
   }
 }
 
@@ -528,11 +537,12 @@ export async function POST(request: Request) {
 
   if (emailSent && supabaseSaved && data) {
     return NextResponse.json({
-      ok: true,
-      emailSent,
-      emailTo: emailResult.toEmail,
-      data,
-    });
+        ok: true,
+        emailSent,
+        emailTo: emailResult.toEmail,
+        emailError: emailResult.reason,
+        data,
+      });
   }
 
   if (emailSent && !supabaseSaved) {
@@ -541,6 +551,7 @@ export async function POST(request: Request) {
         ok: true,
         emailSent: true,
         emailTo: emailResult.toEmail,
+        emailError: emailResult.reason,
         data: null,
         warning:
           "Emailul a fost trimis, dar cererea nu s-a salvat în Supabase.",
@@ -555,6 +566,7 @@ export async function POST(request: Request) {
         ok: true,
         emailSent: false,
         emailTo: emailResult.toEmail,
+        emailError: emailResult.reason,
         data,
         warning:
           "Cererea s-a salvat în Supabase, dar emailul nu a putut fi trimis.",

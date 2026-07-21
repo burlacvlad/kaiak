@@ -540,7 +540,12 @@ function HeroBookingForm() {
       });
 
       const result = (await response.json().catch(() => null)) as
-        | { error?: string; emailTo?: string | null; emailSent?: boolean }
+        | {
+            error?: string;
+            emailTo?: string | null;
+            emailSent?: boolean;
+            emailError?: string | null;
+          }
         | null;
 
       if (!response.ok) {
@@ -551,6 +556,9 @@ function HeroBookingForm() {
 
       console.log("Cerere trimisă la:", result?.emailTo ?? "adresă necunoscută");
       console.log("Email status:", result?.emailSent ? "trimis" : "netrimis");
+      if (result?.emailError) {
+        console.log("Email error:", result.emailError);
+      }
 
       setMessageType("success");
       setMessage("Cererea a fost trimisă. Revenim rapid cu confirmarea arendei.");
