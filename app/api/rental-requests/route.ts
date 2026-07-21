@@ -175,6 +175,7 @@ async function sendRentalRequestEmail({
   const apiKey = process.env.MAILGUN_API_KEY;
   const domain = process.env.MAILGUN_DOMAIN;
   const toEmail = process.env.MAILGUN_TO_EMAIL ?? "burlac.vlad@gmail.com";
+  const replyToEmail = "burlac.vlad@gmail.com";
   const fromEmail = normalizeMailgunFromEmail(
     process.env.MAILGUN_FROM_EMAIL ??
       (domain ? `KAYAK Nistru <postmaster@${domain}>` : null)
@@ -393,6 +394,7 @@ async function sendRentalRequestEmail({
   const formData = new FormData();
   formData.set("from", fromEmail);
   formData.set("to", toEmail);
+  formData.set("h:Reply-To", replyToEmail);
   formData.set("subject", subject);
   formData.set("text", text);
   formData.set("html", html);

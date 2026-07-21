@@ -12,7 +12,6 @@ import {
   Clock3,
   Compass,
   LifeBuoy,
-  Mail,
   MapPin,
   MapPinned,
   Menu,
@@ -47,7 +46,7 @@ const heroChecks = [
   "Doar arendă, fără excursii organizate",
   "Tu alegi singur traseul și ritmul",
   "Rezervare rapidă și ușoară",
-  "Punct de start: satul Pîrîta",
+  "Punct de primire a echipamentului: satul Pîrîta",
 ];
 
 const benefits = [
@@ -386,8 +385,8 @@ function Hero() {
             satul Pîrîta
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-cyan-50 sm:text-xl">
-            Închiriază caiace gonflabile, corturi și saci de dormit. Nu
-            organizăm excursii sau tururi, doar arendă de echipament.
+            Închiriază caiace gonflabile, corturi și saci de dormit. Noi îți
+            oferim echipamentul, iar tu îți decizi aventura.
           </p>
 
           <div className="mt-8 grid max-w-xl gap-3 sm:grid-cols-2">
@@ -1421,7 +1420,6 @@ function FeaturedPriceCard() {
 function InfoPriceCard() {
   const info = [
     "Prețurile includ vestă, sacoșă impermeabilă",
-    "Livrare la punctul de start",
     "Reduceri pentru grupuri și copii",
   ];
 
@@ -1787,7 +1785,7 @@ function FinalCTA() {
       <div className="relative mx-auto flex max-w-7xl flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="max-w-3xl text-4xl font-black leading-tight sm:text-5xl">
-            Pregătit pentru arendă, nu pentru excursii organizate?
+            Esti pregatit pentru aventura ta
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-cyan-50">
             Rezervă acum echipamentul și folosește-l cum vrei, în ritmul tău.
@@ -1857,12 +1855,6 @@ function Footer() {
               <a href="tel:078951423" className="flex items-center gap-2 transition hover:text-[#5ce0ed]">
                 <Phone className="h-4 w-4 text-[#5ce0ed]" aria-hidden="true" />
                 078951423
-              </a>
-            </li>
-            <li>
-              <a href="mailto:contact@kayaknistru.md" className="flex items-center gap-2 transition hover:text-[#5ce0ed]">
-                <Mail className="h-4 w-4 text-[#5ce0ed]" aria-hidden="true" />
-                contact@kayaknistru.md
               </a>
             </li>
           </ul>
