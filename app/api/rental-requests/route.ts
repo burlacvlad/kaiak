@@ -163,7 +163,7 @@ async function sendRentalRequestEmail({
   customerPhone: string | null;
   customerEmail: string | null;
   customerNote: string | null;
-}) {
+}): Promise<{ sent: boolean; toEmail: string | null }> {
   const apiKey = process.env.MAILGUN_API_KEY;
   const domain = process.env.MAILGUN_DOMAIN;
   const toEmail = process.env.MAILGUN_TO_EMAIL ?? "burlac.vlad@gmail.com";
@@ -173,7 +173,7 @@ async function sendRentalRequestEmail({
 
   if (!apiKey || !domain || !fromEmail) {
     console.warn("Mailgun env is missing, rental request email skipped");
-    return false;
+    return { sent: false, toEmail };
   }
 
   const equipmentLines = equipment
@@ -404,13 +404,13 @@ async function sendRentalRequestEmail({
     if (!response.ok) {
       const details = await response.text();
       console.error("Mailgun rental request email failed", details);
-      return false;
+      return { sent: false, toEmail };
     }
 
-    return true;
+    return { sent: true, toEmail };
   } catch (error) {
     console.error("Mailgun rental request email failed", error);
-    return false;
+    return { sent: false, toEmail };
   }
 }
 
@@ -486,7 +486,7 @@ export async function POST(request: Request) {
     source: "website",
   };
 
-  const emailSent = await sendRentalRequestEmail({
+  const emailResult = await sendRentalRequestEmail({
     requestId: null,
     rentalDate,
     startTime,
@@ -497,6 +497,7 @@ export async function POST(request: Request) {
     customerEmail: payload.customer_email,
     customerNote: payload.customer_note,
   });
+  const emailSent = emailResult.sent;
 
   let data: unknown = null;
   let supabaseSaved = false;
@@ -529,6 +530,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       emailSent,
+      emailTo: emailResult.toEmail,
       data,
     });
   }
@@ -538,6 +540,7 @@ export async function POST(request: Request) {
       {
         ok: true,
         emailSent: true,
+        emailTo: emailResult.toEmail,
         data: null,
         warning:
           "Emailul a fost trimis, dar cererea nu s-a salvat în Supabase.",
@@ -551,6 +554,7 @@ export async function POST(request: Request) {
       {
         ok: true,
         emailSent: false,
+        emailTo: emailResult.toEmail,
         data,
         warning:
           "Cererea s-a salvat în Supabase, dar emailul nu a putut fi trimis.",
